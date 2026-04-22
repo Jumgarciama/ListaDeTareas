@@ -23,14 +23,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarRecyclerView() {
-        // TODO 1: Crear el adapter pasando listaTareas y una lambda para eliminar
-        // adapter = TareaAdapter(???) { posicion -> ??? }
+        // ✅ TODO 1
+        adapter = TareaAdapter(listaTareas) { posicion ->
+            eliminarTarea(posicion)
+        }
 
-        // TODO 2: Asignar un LinearLayoutManager al RecyclerView
-        // binding.rvTareas.layoutManager = ???
+        // ✅ TODO 2
+        binding.rvTareas.layoutManager = LinearLayoutManager(this)
 
-        // TODO 3: Asignar el adapter al RecyclerView
-        // binding.rvTareas.adapter = ???
+        // ✅ TODO 3
+        binding.rvTareas.adapter = adapter
     }
 
     private fun configurarBotones() {
@@ -46,24 +48,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun agregarTarea(titulo: String) {
-        // TODO 4: Incrementar contadorId
-        // TODO 5: Crear una nueva Tarea con el id y titulo
-        // TODO 6: Agregarla a listaTareas
-        // TODO 7: Notificar al adapter con adapter.notifyItemInserted(listaTareas.size - 1)
-        // TODO 8: Llamar a actualizarContador()
+        // ✅ TODO 4
+        contadorId++
+
+        // ✅ TODO 5
+        val nuevaTarea = Tarea(contadorId, titulo, false)
+
+        // ✅ TODO 6
+        listaTareas.add(nuevaTarea)
+
+        // ✅ TODO 7
+        adapter.notifyItemInserted(listaTareas.size - 1)
+
+        // ✅ TODO 8
+        actualizarContador()
     }
 
     private fun eliminarTarea(posicion: Int) {
-        // TODO 9: Remover la tarea en la posición dada
-        // TODO 10: Notificar al adapter:
-        //          adapter.notifyItemRemoved(posicion)
-        //          adapter.notifyItemRangeChanged(posicion, listaTareas.size)
-        // TODO 11: Llamar a actualizarContador()
+        // ✅ TODO 9
+        listaTareas.removeAt(posicion)
+
+        // ✅ TODO 10
+        adapter.notifyItemRemoved(posicion)
+        adapter.notifyItemRangeChanged(posicion, listaTareas.size)
+
+        // ✅ TODO 11
+        actualizarContador()
     }
 
     private fun actualizarContador() {
-        // TODO 12: Contar cuántas tareas tienen completada == false
-        //          (pista: usar .count { } sobre la lista)
-        // TODO 13: Actualizar binding.tvContador.text con "$pendientes tareas pendientes"
+        // ✅ TODO 12
+        val pendientes = listaTareas.count { !it.completada }
+
+        // ✅ TODO 13
+        binding.tvContador.text = "$pendientes tareas pendientes"
     }
 }

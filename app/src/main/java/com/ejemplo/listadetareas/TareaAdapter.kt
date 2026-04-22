@@ -24,29 +24,31 @@ class TareaAdapter(
     override fun onBindViewHolder(holder: TareaViewHolder, position: Int) {
         val tarea = tareas[position]
 
-        // TODO 1: Asignar el título de la tarea al TextView
-        // holder.binding.tvTitulo.text = ???
+        // ✅ TODO 1: título
+        holder.binding.tvTitulo.text = tarea.titulo
 
-        // TODO 2: Asignar el estado de completada al CheckBox
-        // holder.binding.cbCompletada.isChecked = ???
+        // ✅ TODO 2: estado del checkbox
+        holder.binding.cbCompletada.isChecked = tarea.completada
 
         actualizarEstiloTexto(holder, tarea.completada)
 
-        // TODO 3: Listener del CheckBox — cuando cambie, actualizar tarea.completada
-        //         y llamar a actualizarEstiloTexto con el nuevo estado
-        holder.binding.cbCompletada.setOnCheckedChangeListener { _, isChecked ->
+        //Limpiar listener anterior para evitar bugs de reciclaje
+        holder.binding.cbCompletada.setOnCheckedChangeListener(null)
 
+        // ✅ TODO 3: listener checkbox
+        holder.binding.cbCompletada.setOnCheckedChangeListener { _, isChecked ->
+            tarea.completada = isChecked
+            actualizarEstiloTexto(holder, isChecked)
         }
 
-        // TODO 4: Listener del botón eliminar — llamar a onEliminar(position)
+        // ✅ TODO 4: eliminar
         holder.binding.btnEliminar.setOnClickListener {
-
+            onEliminar(position)
         }
     }
 
     override fun getItemCount(): Int = tareas.size
 
-    // Esta función tacha o destacha el texto según el estado
     private fun actualizarEstiloTexto(holder: TareaViewHolder, completada: Boolean) {
         if (completada) {
             holder.binding.tvTitulo.paintFlags =
