@@ -1,0 +1,69 @@
+package com.ejemplo.listadetareas
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ejemplo.listadetareas.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private val listaTareas = mutableListOf<Tarea>()
+    private lateinit var adapter: TareaAdapter
+    private var contadorId = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        configurarRecyclerView()
+        configurarBotones()
+    }
+
+    private fun configurarRecyclerView() {
+        // TODO 1: Crear el adapter pasando listaTareas y una lambda para eliminar
+        // adapter = TareaAdapter(???) { posicion -> ??? }
+
+        // TODO 2: Asignar un LinearLayoutManager al RecyclerView
+        // binding.rvTareas.layoutManager = ???
+
+        // TODO 3: Asignar el adapter al RecyclerView
+        // binding.rvTareas.adapter = ???
+    }
+
+    private fun configurarBotones() {
+        binding.btnAgregar.setOnClickListener {
+            val texto = binding.etNuevaTarea.text.toString().trim()
+            if (texto.isNotEmpty()) {
+                agregarTarea(texto)
+                binding.etNuevaTarea.text.clear()
+            } else {
+                Toast.makeText(this, "Escribe una tarea primero", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun agregarTarea(titulo: String) {
+        // TODO 4: Incrementar contadorId
+        // TODO 5: Crear una nueva Tarea con el id y titulo
+        // TODO 6: Agregarla a listaTareas
+        // TODO 7: Notificar al adapter con adapter.notifyItemInserted(listaTareas.size - 1)
+        // TODO 8: Llamar a actualizarContador()
+    }
+
+    private fun eliminarTarea(posicion: Int) {
+        // TODO 9: Remover la tarea en la posición dada
+        // TODO 10: Notificar al adapter:
+        //          adapter.notifyItemRemoved(posicion)
+        //          adapter.notifyItemRangeChanged(posicion, listaTareas.size)
+        // TODO 11: Llamar a actualizarContador()
+    }
+
+    private fun actualizarContador() {
+        // TODO 12: Contar cuántas tareas tienen completada == false
+        //          (pista: usar .count { } sobre la lista)
+        // TODO 13: Actualizar binding.tvContador.text con "$pendientes tareas pendientes"
+    }
+}
